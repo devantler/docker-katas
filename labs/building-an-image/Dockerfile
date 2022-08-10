@@ -1,10 +1,19 @@
 # Dockerfile for docker-flask web application
 
 # Add a base image to build this image off of
-FROM 
+FROM ubuntu:latest
 
+RUN apt-get update && apt-get install -y \ 
+    python3 \
+    python3-pip \
+    python3-dev \
+    build-essential
+
+COPY requirements.txt /usr/src/app/
+RUN pip3 install --no-cache-dir -r /usr/src/app/requirements.txt
+COPY app.py /usr/src/app/
 # Add a default port containers from this image should expose
-EXPOSE 
+EXPOSE 5000
 
 # Add a default command for this image
-CMD 
+CMD ["python3", "/usr/src/app/app.py"]
